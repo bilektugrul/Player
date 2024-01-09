@@ -852,7 +852,7 @@ public class PlayerActivity extends Activity {
                     if (playerView.keySeekStart == -1) {
                         playerView.keySeekStart = pos;
                     }
-                    long seekTo = pos - 10_000;
+                    long seekTo = pos - 5_000;
                     if (seekTo < 0)
                         seekTo = 0;
                     player.setSeekParameters(SeekParameters.PREVIOUS_SYNC);
@@ -873,7 +873,7 @@ public class PlayerActivity extends Activity {
                     if (playerView.keySeekStart == -1) {
                         playerView.keySeekStart = pos;
                     }
-                    long seekTo = pos + 10_000;
+                    long seekTo = pos + 5_000;
                     long seekMax = player.getDuration();
                     if (seekMax != C.TIME_UNSET && seekTo > seekMax)
                         seekTo = seekMax;
@@ -2303,4 +2303,9 @@ public class PlayerActivity extends Activity {
             }
         }
     }
+
+    public Prefs getPrefs() {
+        return mPrefs;
+    }
+
 }
