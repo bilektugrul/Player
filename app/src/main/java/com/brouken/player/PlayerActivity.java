@@ -2304,8 +2304,4 @@ public class PlayerActivity extends Activity {
         }
     }
 
-    public Prefs getPrefs() {
-        return mPrefs;
-    }
-
 }
