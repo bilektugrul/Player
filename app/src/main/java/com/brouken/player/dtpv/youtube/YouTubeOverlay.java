@@ -94,13 +94,13 @@ public final class YouTubeOverlay extends ConstraintLayout implements PlayerDoub
             playerViewRef = a.getResourceId(R.styleable.YouTubeOverlay_yt_playerView, -1);
 
             // Durations
-            setAnimationDuration((long)a.getInt(
+            setAnimationDuration(a.getInt(
                     R.styleable.YouTubeOverlay_yt_animationDuration, 650));
 
             seekSeconds = a.getInt(
                     R.styleable.YouTubeOverlay_yt_seekSeconds, 5);
 
-            setIconAnimationDuration((long)a.getInt(
+            setIconAnimationDuration(a.getInt(
                     R.styleable.YouTubeOverlay_yt_iconAnimationDuration, 750));
 
             // Arc size
@@ -150,7 +150,7 @@ public final class YouTubeOverlay extends ConstraintLayout implements PlayerDoub
 
         // If the PlayerView is set by XML then call the corresponding setter method
         if (playerViewRef != -1)
-            playerView((DoubleTapPlayerView)((View)getParent()).findViewById(playerViewRef));
+            playerView(((View)getParent()).findViewById(playerViewRef));
     }
 
     /**
@@ -239,11 +239,11 @@ public final class YouTubeOverlay extends ConstraintLayout implements PlayerDoub
     /**
      * Color of the clipped background circle
      */
-    public final int getCircleBackgroundColor() {
+    public int getCircleBackgroundColor() {
         return ((CircleClipTapView)findViewById(R.id.circle_clip_tap_view)).getCircleBackgroundColor();
     }
 
-    private final void setCircleBackgroundColor(int value) {
+    private void setCircleBackgroundColor(int value) {
         ((CircleClipTapView)findViewById(R.id.circle_clip_tap_view)).setCircleBackgroundColor(value);
     }
 
@@ -262,7 +262,7 @@ public final class YouTubeOverlay extends ConstraintLayout implements PlayerDoub
      * The overlay keeps visible until the animation finishes.
      */
     private long animationDuration;
-    public final long getAnimationDuration() {
+    public long getAnimationDuration() {
         return ((CircleClipTapView)findViewById(R.id.circle_clip_tap_view)).getAnimationDuration();
     }
 
@@ -280,7 +280,7 @@ public final class YouTubeOverlay extends ConstraintLayout implements PlayerDoub
      * The greater the value the more roundish the shape becomes
      */
     private float arcSize;
-    public final float getArcSize() {
+    public float getArcSize() {
         return ((CircleClipTapView)findViewById(R.id.circle_clip_tap_view)).getArcSize();
     }
 
@@ -302,7 +302,7 @@ public final class YouTubeOverlay extends ConstraintLayout implements PlayerDoub
      * Duration the icon animation (fade in + fade out) for a full cycle in milliseconds.
      */
     private long iconAnimationDuration = 750;
-    public final long getIconAnimationDuration() {
+    public long getIconAnimationDuration() {
         return ((SecondsView)findViewById(R.id.seconds_view)).getCycleDuration();
     }
 
@@ -324,7 +324,7 @@ public final class YouTubeOverlay extends ConstraintLayout implements PlayerDoub
      * could result in additional space between the three icons.
      */
     private int icon;
-    public final int getIcon() {
+    public int getIcon() {
         return ((SecondsView)findViewById(R.id.seconds_view)).getIcon();
     }
 
@@ -342,16 +342,16 @@ public final class YouTubeOverlay extends ConstraintLayout implements PlayerDoub
      * Text appearance of the *xx seconds* text.
      */
     private int textAppearance;
-    public final int getTextAppearance() {
+    public int getTextAppearance() {
         return textAppearance;
     }
 
-    private final void setTextAppearance(int value) {
+    private void setTextAppearance(int value) {
         TextViewCompat.setTextAppearance(((SecondsView)findViewById(R.id.seconds_view)).getTextView(), value);
         textAppearance = value;
     }
 
-    public final YouTubeOverlay textAppearance(@StyleRes int resId) {
+    public YouTubeOverlay textAppearance(@StyleRes int resId) {
         setTextAppearance(resId);
         return this;
     }
@@ -361,7 +361,7 @@ public final class YouTubeOverlay extends ConstraintLayout implements PlayerDoub
      *
      * In case of you'd like to change some specific attributes of the TextView in runtime.
      */
-    public final TextView getSecondsTextView() {
+    public TextView getSecondsTextView() {
         return ((SecondsView)findViewById(R.id.seconds_view)).getTextView();
     }
 
@@ -380,7 +380,6 @@ public final class YouTubeOverlay extends ConstraintLayout implements PlayerDoub
                     if (playerView.isControllerFullyVisible())
                         playerView.hideController();
                 }
-                return;
             }
         }
 

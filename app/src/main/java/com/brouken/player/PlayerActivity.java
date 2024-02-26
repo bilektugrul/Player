@@ -77,11 +77,7 @@ import androidx.media3.common.TrackSelectionOverride;
 import androidx.media3.common.TrackSelectionParameters;
 import androidx.media3.common.Tracks;
 import androidx.media3.datasource.DefaultHttpDataSource;
-import androidx.media3.exoplayer.DefaultRenderersFactory;
-import androidx.media3.exoplayer.ExoPlaybackException;
-import androidx.media3.exoplayer.ExoPlayer;
-import androidx.media3.exoplayer.RenderersFactory;
-import androidx.media3.exoplayer.SeekParameters;
+import androidx.media3.exoplayer.*;
 import androidx.media3.exoplayer.source.DefaultMediaSourceFactory;
 import androidx.media3.exoplayer.trackselection.DefaultTrackSelector;
 import androidx.media3.extractor.DefaultExtractorsFactory;
@@ -1202,9 +1198,15 @@ public class PlayerActivity extends Activity {
                 .setExtensionRendererMode(mPrefs.decoderPriority)
                 .setMapDV7ToHevc(mPrefs.mapDV7ToHevc);
 
+        DefaultMediaSourceFactory dataSource = new DefaultMediaSourceFactory(this, extractorsFactory);
+        DefaultLoadControl loadControl = new DefaultLoadControl.Builder()
+                .setBackBuffer(1000 * 120, true) //for retaining previously loaded 2 minutes of data in buffer
+                .build();
+
         ExoPlayer.Builder playerBuilder = new ExoPlayer.Builder(this, renderersFactory)
                 .setTrackSelector(trackSelector)
-                .setMediaSourceFactory(new DefaultMediaSourceFactory(this, extractorsFactory));
+                .setMediaSourceFactory(dataSource)
+                .setLoadControl(loadControl);
 
         if (haveMedia && isNetworkUri) {
             if (mPrefs.mediaUri.getScheme().toLowerCase().startsWith("http")) {
