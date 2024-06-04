@@ -93,7 +93,7 @@ public class CustomPlayerView extends PlayerView implements GestureDetector.OnGe
             exoErrorMessage.setOnClickListener(v -> {
                 if (PlayerActivity.locked) {
                     PlayerActivity.locked = false;
-                    //Utils.showText(CustomPlayerView.this, "", MESSAGE_TIMEOUT_LONG);
+                    Utils.showText(CustomPlayerView.this, "", MESSAGE_TIMEOUT_LONG);
                     setIconLock(false);
                 }
             });
@@ -182,7 +182,7 @@ public class CustomPlayerView extends PlayerView implements GestureDetector.OnGe
     public boolean tap() {
         if (PlayerActivity.locked) {
             //Utils.showText(this, "", MESSAGE_TIMEOUT_LONG);
-            setIconLock(true);
+            //setIconLock(true);
             return true;
         }
 
@@ -302,7 +302,7 @@ public class CustomPlayerView extends PlayerView implements GestureDetector.OnGe
         if (PlayerActivity.locked || (getPlayer() != null && getPlayer().isPlaying())) {
             PlayerActivity.locked = !PlayerActivity.locked;
             isHandledLongPress = true;
-            //Utils.showText(this, "", MESSAGE_TIMEOUT_LONG);
+            Utils.showText(this, "", MESSAGE_TIMEOUT_LONG);
             setIconLock(PlayerActivity.locked);
 
             if (PlayerActivity.locked && PlayerActivity.controllerVisible) {
@@ -411,7 +411,7 @@ public class CustomPlayerView extends PlayerView implements GestureDetector.OnGe
     }
 
     public void setIconLock(boolean locked) {
-        //exoErrorMessage.setCompoundDrawablesWithIntrinsicBounds(locked ? R.drawable.ic_lock_24dp : R.drawable.ic_lock_open_24dp, 0, 0, 0);
+        exoErrorMessage.setCompoundDrawablesWithIntrinsicBounds(locked ? R.drawable.ic_lock_24dp : R.drawable.ic_lock_open_24dp, 0, 0, 0);
     }
 
     public void setScale(final float scale) {
