@@ -155,7 +155,7 @@ public final class YouTubeOverlay extends ConstraintLayout implements PlayerDoub
 
     /**
      * Obligatory call if playerView is not set via XML!
-     *
+     * <p>
      * Links the DoubleTapPlayerView to this view for recognizing the tapped position.
      *
      * @param playerView PlayerView which triggers the event
@@ -206,7 +206,7 @@ public final class YouTubeOverlay extends ConstraintLayout implements PlayerDoub
      * Forward / rewind duration on a tap in seconds.
      */
     private int seekSeconds;
-    public int getSeekSeconds() {
+    public int getSeekSeconds()  {
         return seekSeconds;
     }
 
@@ -430,12 +430,7 @@ public final class YouTubeOverlay extends ConstraintLayout implements PlayerDoub
 
             // Cancel ripple and start new without triggering overlay disappearance
             // (resetting instead of ending)
-            ((CircleClipTapView)findViewById(R.id.circle_clip_tap_view)).resetAnimation(new Runnable() {
-                @Override
-                public void run() {
-                    ((CircleClipTapView)findViewById(R.id.circle_clip_tap_view)).updatePosition(posX, posY);
-                }
-            });
+            ((CircleClipTapView)findViewById(R.id.circle_clip_tap_view)).resetAnimation(() -> ((CircleClipTapView)findViewById(R.id.circle_clip_tap_view)).updatePosition(posX, posY));
             rewinding();
         } else if (posX > playerView.getWidth() * 0.65) {
 
@@ -449,12 +444,7 @@ public final class YouTubeOverlay extends ConstraintLayout implements PlayerDoub
 
             // Cancel ripple and start new without triggering overlay disappearance
             // (resetting instead of ending)
-            ((CircleClipTapView)findViewById(R.id.circle_clip_tap_view)).resetAnimation(new Runnable() {
-                @Override
-                public void run() {
-                    ((CircleClipTapView)findViewById(R.id.circle_clip_tap_view)).updatePosition(posX, posY);
-                }
-            });
+            ((CircleClipTapView)findViewById(R.id.circle_clip_tap_view)).resetAnimation(() -> ((CircleClipTapView)findViewById(R.id.circle_clip_tap_view)).updatePosition(posX, posY));
             forwarding();
         } else {
             // Middle area tapped: do nothing
@@ -505,13 +495,13 @@ public final class YouTubeOverlay extends ConstraintLayout implements PlayerDoub
     private void forwarding() {
         SecondsView secondsView = findViewById(R.id.seconds_view);
         secondsView.setSeconds(secondsView.getSeconds() + seekSeconds);
-        seekToPosition(player != null ? player.getCurrentPosition() + (long)(this.seekSeconds * 1000) : null);
+        seekToPosition(player != null ? player.getCurrentPosition() + (this.seekSeconds * 1000L) : null);
     }
 
     private void rewinding() {
         SecondsView secondsView = findViewById(R.id.seconds_view);
         secondsView.setSeconds(secondsView.getSeconds() + seekSeconds);
-        seekToPosition(player != null ? player.getCurrentPosition() - (long)(this.seekSeconds * 1000) : null);
+        seekToPosition(player != null ? player.getCurrentPosition() - (this.seekSeconds * 1000L) : null);
     }
 
     private void changeConstraints(boolean forward) {
@@ -528,7 +518,7 @@ public final class YouTubeOverlay extends ConstraintLayout implements PlayerDoub
                     ConstraintSet.PARENT_ID, ConstraintSet.START);
         }
         //secondsView.start();
-        constraintSet.applyTo((ConstraintLayout)findViewById(R.id.root_constraint_layout));
+        constraintSet.applyTo(findViewById(R.id.root_constraint_layout));
     }
 
     public interface PerformListener {
