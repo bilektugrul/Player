@@ -38,7 +38,6 @@ class CustomDefaultTrackNameProvider extends DefaultTrackNameProvider {
         if (mimeType == null) {
             return null;
         }
-
         switch (mimeType) {
             case MimeTypes.AUDIO_DTS:
                 return "DTS";
