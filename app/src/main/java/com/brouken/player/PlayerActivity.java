@@ -1295,12 +1295,12 @@ public class PlayerActivity extends Activity {
             }
             player.setMediaItem(mediaItemBuilder.build(), mPrefs.getPosition());
 
-            if (loudnessEnhancer != null) {
-                loudnessEnhancer.release();
-            }
             try {
+                if (loudnessEnhancer != null) {
+                    loudnessEnhancer.release();
+                }
                 loudnessEnhancer = new LoudnessEnhancer(player.getAudioSessionId());
-            } catch (RuntimeException e) {
+            } catch (Exception e) {
                 e.printStackTrace();
             }
 
@@ -1409,12 +1409,12 @@ public class PlayerActivity extends Activity {
     private class PlayerListener implements Player.Listener {
         @Override
         public void onAudioSessionIdChanged(int audioSessionId) {
-            if (loudnessEnhancer != null) {
-                loudnessEnhancer.release();
-            }
             try {
+                if (loudnessEnhancer != null) {
+                    loudnessEnhancer.release();
+                }
                 loudnessEnhancer = new LoudnessEnhancer(audioSessionId);
-            } catch (RuntimeException e) {
+            } catch (Exception e) {
                 e.printStackTrace();
             }
             notifyAudioSessionUpdate(true);
