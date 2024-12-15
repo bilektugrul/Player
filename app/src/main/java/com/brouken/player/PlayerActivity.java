@@ -6,12 +6,7 @@ import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.annotation.SuppressLint;
 import android.annotation.TargetApi;
-import android.app.Activity;
-import android.app.AlertDialog;
-import android.app.AppOpsManager;
-import android.app.PendingIntent;
-import android.app.PictureInPictureParams;
-import android.app.RemoteAction;
+import android.app.*;
 import android.content.BroadcastReceiver;
 import android.content.ComponentName;
 import android.content.ContentResolver;
@@ -86,7 +81,6 @@ import androidx.media3.extractor.ts.TsExtractor;
 import androidx.media3.session.MediaSession;
 import androidx.media3.ui.AspectRatioFrameLayout;
 import androidx.media3.ui.CaptionStyleCompat;
-import androidx.media3.ui.DefaultTimeBar;
 import androidx.media3.ui.PlayerControlView;
 import androidx.media3.ui.PlayerView;
 import androidx.media3.ui.SubtitleView;
@@ -1201,6 +1195,7 @@ public class PlayerActivity extends Activity {
         DefaultMediaSourceFactory dataSource = new DefaultMediaSourceFactory(this, extractorsFactory);
         DefaultLoadControl loadControl = new DefaultLoadControl.Builder()
                 .setBackBuffer(1000 * 120, true) //for retaining previously loaded 2 minutes of data in buffer
+                .setBufferDurationsMs(5000, 1000 * 310, 1500, 5000)
                 .build();
 
         ExoPlayer.Builder playerBuilder = new ExoPlayer.Builder(this, renderersFactory)
@@ -1212,7 +1207,7 @@ public class PlayerActivity extends Activity {
             if (mPrefs.mediaUri.getScheme().toLowerCase().startsWith("http")) {
                 HashMap<String, String> headers = new HashMap<>();
                 String userInfo = mPrefs.mediaUri.getUserInfo();
-                if (userInfo != null && userInfo.length() > 0 && userInfo.contains(":")) {
+                if (userInfo != null && !userInfo.isEmpty() && userInfo.contains(":")) {
                     headers.put("Authorization", "Basic " + Base64.encodeToString(userInfo.getBytes(), Base64.NO_WRAP));
                     DefaultHttpDataSource.Factory defaultHttpDataSourceFactory = new DefaultHttpDataSource.Factory();
                     defaultHttpDataSourceFactory.setDefaultRequestProperties(headers);
@@ -1256,10 +1251,10 @@ public class PlayerActivity extends Activity {
 
         if (haveMedia) {
             if (isNetworkUri) {
-                timeBar.setBufferedColor(DefaultTimeBar.DEFAULT_BUFFERED_COLOR);
+                timeBar.setBufferedColor(0x883636);
             } else {
                 // https://github.com/google/ExoPlayer/issues/5765
-                timeBar.setBufferedColor(0x33FFFFFF);
+                timeBar.setBufferedColor(0x883636);
             }
 
             playerView.setResizeMode(mPrefs.resizeMode);
@@ -1287,7 +1282,7 @@ public class PlayerActivity extends Activity {
                         .build();
                 mediaItemBuilder.setMediaMetadata(mediaMetadata);
             }
-            if (apiAccess && apiSubs.size() > 0) {
+            if (apiAccess && !apiSubs.isEmpty()) {
                 mediaItemBuilder.setSubtitleConfigurations(apiSubs);
             } else if (mPrefs.subtitleUri != null && Utils.fileExists(this, mPrefs.subtitleUri)) {
                 MediaItem.SubtitleConfiguration subtitle = SubtitleUtils.buildSubtitle(this, mPrefs.subtitleUri, null, true);
