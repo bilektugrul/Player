@@ -16,6 +16,9 @@ It uses ExoPlayer's ``ffmpeg`` extension with [all its audio formats](https://ex
 
 It properly syncs audio with video track when using Bluetooth earphones/speaker. (I was not able to find any other nice ExoPlayer based video player so I created this one.)
 
+## This fork
+I just add whatever I feel like I need to have, feel free to fork & open PRs. Thanks moneytoo for this amazing piece of software.
+
 ## Supported formats
 
  * **Audio**: Vorbis, Opus, FLAC, ALAC, PCM/WAVE (μ-law, A-law), MP1, MP2, MP3, AMR (NB, WB), AAC (LC, ELD, HE; xHE on Android 9+), AC-3, E-AC-3, DTS, DTS-HD, TrueHD, IAMF, MPEG-H
