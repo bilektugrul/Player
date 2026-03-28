@@ -90,7 +90,6 @@ import androidx.media3.extractor.ts.TsExtractor;
 import androidx.media3.session.MediaSession;
 import androidx.media3.ui.AspectRatioFrameLayout;
 import androidx.media3.ui.CaptionStyleCompat;
-import androidx.media3.ui.DefaultTimeBar;
 import androidx.media3.ui.PlayerControlView;
 import androidx.media3.ui.PlayerView;
 import androidx.media3.ui.SubtitleView;
@@ -226,10 +225,7 @@ public class PlayerActivity extends Activity {
 
                 long forwardMs = Math.max(0, player.getBufferedPosition() - currentPos);
 
-                long maxBackBufferMs = 120_000;
-                long backMs = Math.min(currentPos, maxBackBufferMs);
-
-                timeBar.setBufferInfo(backMs, forwardMs, duration);
+                timeBar.setBufferInfo(forwardMs, duration);
             }
 
             if (alive) {
